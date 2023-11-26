@@ -2,13 +2,24 @@ from django.shortcuts import render
 from .forms import MyForm
 import cohere
 from openai import OpenAI
-
 from multiprocessing import Process
 
 co = cohere.Client('TheBPPLGT2MfubkoO4tUSXUKGnuOYHh6czpk8Lle')
 
-
 returnDict = {}
+
+def getCitations(string):
+    response = co.chat(
+        message = string,
+        connectors = [{"id": "web-search"}], 
+        prompt_truncation="AUTO"
+    )
+    docs_used = [citation['document_ids'] for citation in response.citations]
+    docs_used = [item for sublist in docs_used for item in sublist]
+    matched_urls = [doc['url'] for doc in response.documents if doc['id'] in docs_used]
+    matched_titles = [doc['title'] for doc in response.documents if doc['id'] in docs_used]
+    returnDict['citation_urls'] = matched_urls
+    returnDict['citation_titles'] = matched_titles
 
 def classifyLangauge(string):
     response = co.detect_language(texts=[string])
@@ -59,13 +70,13 @@ def my_form_view(request):
             p3 = Process(target=getCoralResponse(message, True))
             p3.start()
             p4 = Process(target=getChatGPTResponse(message))
+            p5 = Process(target=getCitations(message))
             p4.start()
             p1.join()
             p2.join()
             p3.join()
             p4.join()
-
-            print(returnDict)
+            p5.join()
             # Do something with the data (e.g., save to a database)
 
             # For demonstration purposes, you can just display the data in the template
