@@ -6,10 +6,14 @@ from multiprocessing import Process
 
 from bs4 import BeautifulSoup
 import requests
-#from selenium import webdriver
-#from selenium.webdriver.chrome.options import Options
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
-co = cohere.Client('TheBPPLGT2MfubkoO4tUSXUKGnuOYHh6czpk8Lle')
+chrome_options = Options()
+chrome_options.add_argument("--headless=new")
+driver = webdriver.Chrome(options=chrome_options)
+
+co = cohere.Client('')
 
 returnDict = {}
 
@@ -50,7 +54,6 @@ def write_data_to_txt(d: dict) -> None:
     """
     pass
 
-'''
 def search_content(input_str: str) -> list:
     # Query to obtain links
     query = input_str
@@ -83,23 +86,11 @@ def getDocs(string):
     citations = dict(zip(matched_titles, links))
     returnDict["rags"] = response.text
     returnDict['citationsRag'] = citations
-'''
+
 def classifyLangauge(string):
     response = co.detect_language(texts=[string])
     language_names = [lang.language_name for lang in response.results]
     returnDict["language"] = language_names[0]
-
-def getChatGPTResponse(string):
-    client = OpenAI(api_key='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')
-
-    completion = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "system",
-                   "content": f"{string}"}
-                  ]
-    )
-
-    returnDict["chatgpt"] = completion.choices[0].message.content
     
 def getCoralResponse(string, connector):
     if connector == True:

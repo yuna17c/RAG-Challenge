@@ -1,5 +1,5 @@
 import cohere
-co = cohere.Client('TheBPPLGT2MfubkoO4tUSXUKGnuOYHh6czpk8Lle')
+co = cohere.Client('')
 
 # example prompt
 prompt="Where do the tallest penguins live?"

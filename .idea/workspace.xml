@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d5819ba7-5681-4278-a2a5-a58d79cd6485" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/compare.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/my_form_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/my_form_view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/thank_you.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/thank_you.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +88,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1701015906543</updated>
-      <workItem from="1701015907605" duration="11296000" />
+      <workItem from="1701015907605" duration="16054000" />
     </task>
     <servers />
   </component>
