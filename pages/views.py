@@ -83,23 +83,10 @@ def getDocs(string):
         documents=data,
         prompt_truncation='AUTO'
     )
-
+    matched_titles = links
+    citations = dict(zip(matched_titles, links))
     returnDict["rags"] = response.text
-
-def getCitations(string):
-    response = co.chat(
-        message = string,
-        connectors = [{"id": "web-search"}], 
-        prompt_truncation="AUTO"
-    )
-    docs_used = [citation['document_ids'] for citation in response.citations]
-    docs_used = [item for sublist in docs_used for item in sublist]
-    matched_urls = [doc['url'] for doc in response.documents if doc['id'] in docs_used]
-    matched_titles = [doc['title'] for doc in response.documents if doc['id'] in docs_used]
-    citations = dict(zip(matched_titles, matched_urls))
-    # returnDict['citation_urls'] = matched_urls
-    # returnDict['citation_titles'] = matched_titles
-    returnDict['citations'] = citations
+    returnDict['citationsRag'] = citations
 
 def classifyLangauge(string):
     response = co.detect_language(texts=[string])
@@ -126,6 +113,14 @@ def getCoralResponse(string, connector):
             connectors=[{"id": "web-search"}]
 
         )
+
+        docs_used = [citation['document_ids'] for citation in response.citations]
+        docs_used = [item for sublist in docs_used for item in sublist]
+        matched_urls = [doc['url'] for doc in response.documents if doc['id'] in docs_used]
+        matched_titles = [doc['title'] for doc in response.documents if doc['id'] in docs_used]
+        citations = dict(zip(matched_titles, matched_urls))
+
+        returnDict['citationsNonRag'] = citations
         returnDict["connect"] = response.text
     else:
         response = co.chat(
@@ -147,21 +142,18 @@ def my_form_view(request):
             p2 = Process(target=getCoralResponse(message, False))
             p3 = Process(target=getCoralResponse(message, True))
             #p4 = Process(target=getChatGPTResponse(message))
-            p5 = Process(target=getCitations(message))
             p6 = Process(target=getDocs(message))
 
             p1.start()
             p2.start()
             p3.start()
             #p4.start()
-            p5.start()
             p6.start()
 
             p1.join()
             p2.join()
             p3.join()
             #p4.join()
-            p5.join()
             p6.join()
             # Do something with the data (e.g., save to a database)
 
@@ -172,7 +164,8 @@ def my_form_view(request):
                                   'noConnect': returnDict["noConnect"],
                                   'withConnect': returnDict["connect"],
                                   'rags': returnDict['rags'],
-                                  'citations':returnDict["citations"]})
+                                  'citationsNonRag': returnDict["citationsNonRag"],
+                                  'citationsRag': returnDict["citationsRag"]})
     else:
         form = MyForm()
 

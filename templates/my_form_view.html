@@ -32,9 +32,29 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+   #myForm {
+        width: 60%;
+        background-color: #ffffff; /* Set a white background for the form */
+        padding: 20px; /* Add some padding inside the form */
+        border-radius: 8px; /* Round the corners of the form */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+        margin: auto; /* Center the form horizontally */
+        text-align: center;
+    }
+
+    #myForm button {
+        background-color: #39594D; /* Set a blue background color for the button */
+        color: #fff; /* Set white text color for the button */
+        padding: 10px 20px; /* Add some padding to the button */
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+
 </style>
 
-<form id="myForm" method="post" action="{% url 'my_form_view' %}">
+<form id="myForm" method="post" action="{% url 'my_form_view' %}" id="myForm">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Submit</button>

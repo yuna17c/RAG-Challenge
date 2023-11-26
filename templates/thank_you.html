@@ -33,7 +33,7 @@
     <p>{{ withConnect }}</p>
     <h2>Citations</h2>
     <ul>
-        {% for key,val in citations.items %}
+        {% for key,val in citationsNonRag.items %}
             <a href={{val}}>
                 <li>{{key}}</li>
             </a>
@@ -43,6 +43,14 @@
     <p>Detected Langauge: {{ langauge }}</p>
     <h2>Coral Response (With Localized Response):</h2>
     <p>{{ rags }}</p>
+        <h2>Citations</h2>
+    <ul>
+        {% for key,val in citationsRag.items %}
+            <a href={{val}}>
+                <li>{{key}}</li>
+            </a>
+        {% endfor %}
+    </ul>
 </div>
 </body>
 </html>
