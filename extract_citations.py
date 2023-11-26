@@ -1,7 +1,7 @@
 import cohere
 co = cohere.Client('TheBPPLGT2MfubkoO4tUSXUKGnuOYHh6czpk8Lle')
 
-# example prompt and documents
+# example prompt
 prompt="Where do the tallest penguins live?"
 response = co.chat(
     message = prompt,
