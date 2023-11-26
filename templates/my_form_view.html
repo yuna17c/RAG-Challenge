@@ -1,3 +1,7 @@
+{% load static %}
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins&family=Roboto+Mono&display=swap" rel="stylesheet">
+</head>
 <style>
 /* CSS for the overlay */
 .overlay {
@@ -14,7 +18,6 @@
     text-align: center;
 }
 
-/* CSS for the spinner */
 .spinner {
     position: absolute;
     top: 50%;
@@ -27,43 +30,84 @@
     height: 120px; /* Triple the size */
     animation: spin 1s linear infinite;
 }
-
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-   #myForm {
-        width: 60%;
-        background-color: #ffffff; /* Set a white background for the form */
-        padding: 20px; /* Add some padding inside the form */
-        border-radius: 8px; /* Round the corners of the form */
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
-        margin: auto; /* Center the form horizontally */
-        text-align: center;
-    }
-
-    #myForm button {
-        background-color: #39594D; /* Set a blue background color for the button */
-        color: #fff; /* Set white text color for the button */
-        padding: 10px 20px; /* Add some padding to the button */
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-
+#myForm {
+    width: 60%;
+    padding: 50px;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+#myForm button {
+    background-color: #39594D;
+    color: #fff;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Open Sans'
+}
+#myForm label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+p, label {
+    font-family: 'Open Sans'
+}
+#myForm textarea {
+    width: 80%;
+    height: 50px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    {% comment %} color: white;
+    background-color:#121F27; {% endcomment %}
+}
+.logo {
+    max-width: 100%; /* Adjust the maximum width of the logo */
+    display: block; /* Ensures the logo behaves as a block element */
+    margin: 0 auto 20px; /* Adjust margins for positioning */
+}
+#formspace {
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    margin-top: 20px;
+    background-color: #121F27;
+}
+#imgdiv {
+    width: 300px;
+    margin: auto;
+    margin-top: 60px;
+}
+body {
+    background-color:#121F27;
+}
 </style>
-
+<body>
+<div id="formspace">
+    <div id="imgdiv">
+        <img src="{% static 'logo.png' %}" alt="Logo" class="logo">
+    </div>
 <form id="myForm" method="post" action="{% url 'my_form_view' %}" id="myForm">
   {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Submit</button>
+  {{ form.message }}
+  <button type="submit">SUBMIT</button>
 </form>
-
+</div>
 <div class="overlay" id="overlay">
     <div class="spinner"></div>
 </div>
-
+</body>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     $(document).ready(function() {

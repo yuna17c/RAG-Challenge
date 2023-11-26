@@ -1,21 +1,17 @@
 from django.shortcuts import render
 from .forms import MyForm
 import cohere
-from openai import OpenAI
+# from openai import OpenAI
 from multiprocessing import Process
 
 from bs4 import BeautifulSoup
 import requests
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+#from selenium import webdriver
+#from selenium.webdriver.chrome.options import Options
 
 co = cohere.Client('TheBPPLGT2MfubkoO4tUSXUKGnuOYHh6czpk8Lle')
 
 returnDict = {}
-
-chrome_options = Options()
-chrome_options.add_argument("--headless=new")
-driver = webdriver.Chrome(options=chrome_options)
 
 SENTENCE = 'quels sont les aliments populaires'
 
@@ -54,7 +50,7 @@ def write_data_to_txt(d: dict) -> None:
     """
     pass
 
-
+'''
 def search_content(input_str: str) -> list:
     # Query to obtain links
     query = input_str
@@ -87,7 +83,7 @@ def getDocs(string):
     citations = dict(zip(matched_titles, links))
     returnDict["rags"] = response.text
     returnDict['citationsRag'] = citations
-
+'''
 def classifyLangauge(string):
     response = co.detect_language(texts=[string])
     language_names = [lang.language_name for lang in response.results]
@@ -104,6 +100,7 @@ def getChatGPTResponse(string):
     )
 
     returnDict["chatgpt"] = completion.choices[0].message.content
+    
 def getCoralResponse(string, connector):
     if connector == True:
         response = co.chat(
