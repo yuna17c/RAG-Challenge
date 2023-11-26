@@ -96,8 +96,10 @@ def getCitations(string):
     docs_used = [item for sublist in docs_used for item in sublist]
     matched_urls = [doc['url'] for doc in response.documents if doc['id'] in docs_used]
     matched_titles = [doc['title'] for doc in response.documents if doc['id'] in docs_used]
-    returnDict['citation_urls'] = matched_urls
-    returnDict['citation_titles'] = matched_titles
+    citations = dict(zip(matched_titles, matched_urls))
+    # returnDict['citation_urls'] = matched_urls
+    # returnDict['citation_titles'] = matched_titles
+    returnDict['citations'] = citations
 
 def classifyLangauge(string):
     response = co.detect_language(texts=[string])
@@ -169,9 +171,8 @@ def my_form_view(request):
                                   'langauge': returnDict["language"],
                                   'noConnect': returnDict["noConnect"],
                                   'withConnect': returnDict["connect"],
-                                  #'chatGPT': returnDict['chatgpt'],
-                                  'rags': returnDict['rags']})
-
+                                  'rags': returnDict['rags'],
+                                  'citations':returnDict["citations"]})
     else:
         form = MyForm()
 

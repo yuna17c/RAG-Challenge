@@ -1,15 +1,46 @@
-<h2>Original Query:</h2>
-<p>{{ query }}</p>
-<h2>Coral Response (No Connectors):</h2>
-<p>{{ noConnect }}</p>
-<h2>Coral Response (Web Connectors):</h2>
-<p>{{ withConnect }}</p>
-<hr>
-<h2>Detected Langauge: {{ langauge }}</h2>
-<h2>Citations</h2>
-<p>{{ citation_titles|unordered_list }}</p>
-<h2>Coral Response (With Localized Content):</h2>
-<p>{{ rags }}</p>
-
-
-
+<html>
+<head>
+    <title>RAG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <style>
+        a {
+            color: #114580;
+            text-decoration: none;
+        }
+        a:visited {
+            color: #purple;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        a:active {
+            color: #ff0000;
+        }
+        h2 {
+            font-family: 'Poppins'
+        }
+        p, li {
+            font-family: 'Open Sans'
+        }
+    </style>
+</head>
+<body>
+<div style="font-family: Arial, sans-serif; padding: 10px;">
+    <h2>Original Query: {{ query }}</h>
+    <h2>Coral Response (No Connectors):</h2>
+    <p>{{ noConnect }}</p>
+    <h2>Coral Response (Web Connectors):</h2>
+    <p>{{ withConnect }}</p>
+    <h2>Citations</h2>
+    <ul>
+        {% for key,val in citations.items %}
+            <a href={{val}}>
+                <li>{{key}}</li>
+            </a>
+        {% endfor %}
+    </ul>
+    <hr>
+    <p>Detected Langauge: {{ langauge }}</p>
+</div>
+</body>
+</html>
